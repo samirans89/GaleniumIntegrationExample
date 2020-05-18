@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.wcm.qa</groupId>
+    <artifactId>io.wcm.qa.galenium.integration.specs</artifactId>
+    <version>3.0.0</version>
+    <relativePath />
+  </parent>
+
+  <groupId>my.group.id</groupId>
+  <artifactId>my.artifact.id.specs</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <name>MyTestAutomationProject Galen specs</name>
+
+  <packaging>jar</packaging>
+
+  <properties>
+    <galenium.specPath>${project.build.outputDirectory}/galen/specs</galenium.specPath>
+    <galenium.generated.java.package>my.root.packagename.test.ui</galenium.generated.java.package>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+  </properties>
+
+  <dependencies>
+
+  </dependencies>
+
+  <!-- distribution management -->
+
+  <build>
+    <sourceDirectory>${galenium.generated.java}</sourceDirectory>
+    <plugins>
+
+      <!-- Generate Java code from Galen specs -->
+      <plugin>
+        <groupId>io.wcm.qa</groupId>
+        <artifactId>io.wcm.qa.galenium.specs-maven-plugin</artifactId>
+        <configuration>
+          <selectorIncludes>
+            <include>**/objects/**/*.gspec</include>
+          </selectorIncludes>
+          <specIncludes>
+            <include>**/layout/**/*.gspec</include>
+          </specIncludes>
+        </configuration>
+      </plugin>
+
+      <!-- Package JAR -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <skipIfEmpty>true</skipIfEmpty>
+          <excludes>*.xml</excludes>
+          <classesDirectory>${galenium.generated.class}</classesDirectory>
+        </configuration>
+      </plugin>
+
+    </plugins>
+
+  </build>
+</project>
